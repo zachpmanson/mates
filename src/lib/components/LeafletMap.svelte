@@ -32,9 +32,9 @@
 
 		navigator.geolocation.getCurrentPosition(
 			(pos) => {
-				L.marker([pos.coords.latitude, pos.coords.longitude])
+				L.circleMarker([pos.coords.latitude, pos.coords.longitude])
 					.addTo(map)
-					.bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+					.bindPopup('You are here!')
 					.openPopup();
 			},
 			() => {},
