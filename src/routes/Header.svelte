@@ -1,4 +1,5 @@
 <script>
+	import Button from '$lib/components/ui/button/button.svelte';
 	import logo from '$lib/images/logo.svg';
 </script>
 
@@ -34,8 +35,5 @@
 
 	<nav></nav>
 
-	<button
-		class="min-h-8 rounded bg-mate-red px-3 text-white hover:bg-red-800 transition duration-75 active:bg-red-900 text-sm"
-		>Report Mate Sighting</button
-	>
+	<Button variant={'action'}>Report Mate Sighting</Button>
 </header>
