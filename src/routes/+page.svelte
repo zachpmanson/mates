@@ -9,6 +9,10 @@
 	$: reportStore.setReports(data.reports);
 </script>
 
+<svelte:head>
+	<title>Mates?</title>
+</svelte:head>
+
 <main class="flex flex-col lg:flex-row overflow-hidden">
 	<div class="flex-1">
 		<LeafletMap />
@@ -17,6 +21,3 @@
 		<ReportList />
 	</div>
 </main>
-
-<style>
-</style>
