@@ -43,6 +43,7 @@
 		"leaflet": "^1.9.4",
 		"tailwind-merge": "^2.4.0",
 		"tailwind-variants": "^0.2.1",
-		"trpc-sveltekit": "^3.6.2"
+		"trpc-sveltekit": "^3.6.2",
+		"zod": "^3.23.8"
 	}
 }

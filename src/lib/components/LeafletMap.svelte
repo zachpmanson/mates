@@ -1,12 +1,16 @@
 <script lang="ts">
-	import 'leaflet/dist/leaflet.css'; //Don't forget to declare leaflet css
-	import { onMount, onDestroy } from 'svelte';
-	import type { Map } from 'leaflet';
+	import 'leaflet/dist/leaflet.css';
+	import { onMount, onDestroy, getContext } from 'svelte';
+	import { Map } from 'leaflet';
+	import { reportStore } from '../../stores/reportStore';
 
 	let mapElement: HTMLDivElement;
 	let map: Map;
 
 	let MELB: [number, number] = [-37.81, 144.96];
+
+	let markers: Record<string, L.CircleMarker> = {};
+	let userLocation: [number, number] | null = null;
 
 	onMount(async () => {
 		const L = await import('leaflet');
@@ -18,29 +22,45 @@
 				'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 		}).addTo(map);
 
-		L.marker(MELB)
-			.addTo(map)
-			.bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-			.openPopup();
+		for (const report of $reportStore.reports) {
+			let marker = L.circleMarker(report.coordinates, {
+				color: 'red',
+				radius: 4
+			});
+			markers[report.id.toString()] = marker;
 
-		let circle = L.circle(MELB, {
-			color: 'red',
-			fillColor: '#f03',
-			fillOpacity: 0.5,
-			radius: 500
-		}).addTo(map);
+			marker.addTo(map).on('click', () => {
+				console.log(report);
+				reportStore.setHighlightedReport(report.id);
+			});
+		}
 
 		navigator.geolocation.getCurrentPosition(
 			(pos) => {
-				L.circleMarker([pos.coords.latitude, pos.coords.longitude])
-					.addTo(map)
-					.bindPopup('You are here!')
-					.openPopup();
+				userLocation = [pos.coords.latitude, pos.coords.longitude];
+				L.circleMarker(userLocation).addTo(map).bindPopup('You are here!').openPopup();
 			},
 			() => {},
 			{}
 		);
 	});
+
+	$: if ($reportStore.highlightedReport) {
+		const report = $reportStore.reports.find((r) => r.id === $reportStore.highlightedReport);
+		if (report) {
+			map?.setView(report.coordinates, 13);
+			for (const marker of Object.values(markers)) {
+				marker.setStyle({
+					color: 'red'
+				});
+			}
+			markers[report.id.toString()].setStyle({
+				color: 'purple'
+			});
+		}
+	} else {
+		map?.setView(userLocation ?? MELB, 13);
+	}
 
 	onDestroy(async () => {
 		if (map) {
@@ -54,15 +74,8 @@
 	<div bind:this={mapElement} id="map"></div>
 </div>
 
-<!-- <link
-	rel="stylesheet"
-	href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-	integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-	crossorigin=""
-/> -->
-
 <style>
 	#map {
-		height: 50vh;
+		height: 42vh;
 	}
 </style>

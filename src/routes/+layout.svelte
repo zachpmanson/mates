@@ -3,7 +3,7 @@
 	import '../app.css';
 </script>
 
-<div class="app">
+<div class="app max-h-screen">
 	<Header />
 
 	<main>

@@ -1,6 +1,5 @@
 <script>
 	import Button from '$lib/components/ui/button/button.svelte';
-	import logo from '$lib/images/logo.svg';
 </script>
 
 <header class="flex justify-between items-center p-3 bg-mate-grey">
