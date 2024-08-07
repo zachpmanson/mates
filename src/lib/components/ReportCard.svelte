@@ -11,7 +11,7 @@
 </script>
 
 <Card
-	class={$reportStore.highlightedReport === report.id ? 'bg-gray-100' : ''}
+	class={'cursor-pointer ' + ($reportStore.highlightedReport === report.id ? 'bg-gray-100' : '')}
 	on:click={() => {
 		if ($reportStore.highlightedReport !== report.id) reportStore.setHighlightedReport(report.id);
 		else reportStore.setHighlightedReport(null);
