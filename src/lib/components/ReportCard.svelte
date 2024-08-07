@@ -28,13 +28,13 @@
 				<img src={train} alt="Train icon" class="h-6 w-6" />
 			{/if}
 		</div>
-		<div class="flex items-center gap-3">
+		<div class="flex items-end justify-between gap-2">
 			<span class="text-gray-400">
 				{timeAgo(new Date(report.timestamp))} ago
 			</span>
 
-			<span class="text-gray-400 text-sm">
-				reported by {report.author}
+			<span class="text-gray-400 text-xs">
+				Spotted by {report.author}
 			</span>
 		</div>
 	</div>
