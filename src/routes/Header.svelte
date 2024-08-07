@@ -2,7 +2,7 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 </script>
 
-<header class="flex justify-between items-center p-3 bg-mate-grey">
+<header class="flex justify-between items-center gap-1 p-3 bg-mate-grey">
 	<div class="h-8">
 		<a
 			href="/"
