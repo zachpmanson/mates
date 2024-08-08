@@ -7,7 +7,7 @@ import type { PageLoad } from './$types';
 export const prerender = false;
 export const ssr = false;
 
-export const load: PageLoad = async () => {
+export const load: PageLoad = async ({ params, url }) => {
 	const reports: MateReport[] = [
 		{
 			id: 1,
@@ -36,7 +36,7 @@ export const load: PageLoad = async () => {
 		{
 			id: 4,
 			title: 'Mates spotted at brunswick train station',
-			timestamp: '2024-08-06T08:00:00.000Z',
+			timestamp: '2024-08-07T08:00:00.000Z',
 			author: 'Emily G',
 			coordinates: [-37.79, 144.945009],
 			type: 'train'
@@ -44,6 +44,6 @@ export const load: PageLoad = async () => {
 	];
 	await new Promise((r) => setTimeout(r, 200));
 	return {
-		reports: reports
+		reports: reports.sort((a, b) => (b.timestamp > a.timestamp ? 1 : -1))
 	};
 };

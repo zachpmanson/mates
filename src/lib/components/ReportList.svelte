@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { MateReport } from '../../types/report';
 	import ReportCard from './ReportCard.svelte';
 
 	import { reportStore } from '../../stores/reportStore';
