@@ -11,18 +11,23 @@
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { superForm } from 'sveltekit-superforms/client';
 
-	export let data: { form: FormSchema };
-
-	const { form, errors, message, constraints, enhance } = superForm(data.form, {
-		SPA: true,
-		validators: zod(formSchema),
-		onUpdate({ form }) {
-			if (form.valid) {
-				// TODO: Call an external API with form.data, await the result and update form
-				console.log('Valid');
+	const { form, errors, message, constraints, enhance } = superForm(
+		{
+			description: '',
+			name: '',
+			transport: 'tram'
+		},
+		{
+			SPA: true,
+			validators: zod(formSchema),
+			onUpdate({ form }) {
+				if (form.valid) {
+					// TODO: Call an external API with form.data, await the result and update form
+					console.log('Valid');
+				}
 			}
 		}
-	});
+	);
 
 	function handleSubmit() {
 		console.log('submit');

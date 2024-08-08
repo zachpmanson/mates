@@ -17,7 +17,7 @@
 		else reportStore.setHighlightedReport(null);
 	}}
 >
-	<div class="flex flex-col py-3 px-4">
+	<div class="flex flex-col py-3 px-4" id={`report-${report.id}`}>
 		<div class="flex items-start justify-between gap-2">
 			<span class="">{report.title}</span>
 			{#if report.type === 'tram'}

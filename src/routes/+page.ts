@@ -32,6 +32,14 @@ export const load: PageLoad = async () => {
 			author: 'Jane Doe',
 			coordinates: [-37.8, 144.960009],
 			type: 'tram'
+		},
+		{
+			id: 4,
+			title: 'Mates spotted at brunswick train station',
+			timestamp: '2024-08-06T08:00:00.000Z',
+			author: 'Emily G',
+			coordinates: [-37.79, 144.945009],
+			type: 'train'
 		}
 	];
 	await new Promise((r) => setTimeout(r, 200));

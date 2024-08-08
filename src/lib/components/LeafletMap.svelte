@@ -1,7 +1,7 @@
 <script lang="ts">
-	import 'leaflet/dist/leaflet.css';
-	import { onMount, onDestroy, getContext } from 'svelte';
 	import { Map } from 'leaflet';
+	import 'leaflet/dist/leaflet.css';
+	import { onDestroy, onMount } from 'svelte';
 	import { reportStore } from '../../stores/reportStore';
 
 	let mapElement: HTMLDivElement;
@@ -32,6 +32,12 @@
 			marker.addTo(map).on('click', () => {
 				console.log(report);
 				reportStore.setHighlightedReport(report.id);
+				const el = document.querySelector(`#report-${report.id}`);
+				if (el) {
+					el.scrollIntoView({
+						behavior: 'smooth'
+					});
+				}
 			});
 		}
 
@@ -76,6 +82,6 @@
 
 <style>
 	#map {
-		height: 42vh;
+		height: 100%;
 	}
 </style>

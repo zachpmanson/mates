@@ -13,11 +13,11 @@
 	<title>Mates?</title>
 </svelte:head>
 
-<main class="flex flex-col lg:flex-row overflow-hidden">
-	<div class="flex-1">
+<main class="h-full flex flex-col lg:flex-row overflow-hidden">
+	<div class="flex-[2] lg:flex-1 lg:h-full">
 		<LeafletMap />
 	</div>
-	<div class="flex-1 overflow-scroll h-full">
+	<div class="flex-[3] lg:flex-1 overflow-scroll lg:h-full">
 		<ReportList />
 	</div>
 </main>

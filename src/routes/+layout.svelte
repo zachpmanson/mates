@@ -1,14 +1,12 @@
 <script>
 	import Header from './Header.svelte';
 	import '../app.css';
-
-	export let data;
 </script>
 
-<div class="app max-h-screen">
-	<Header {data} />
+<div class="app h-screen flex flex-col">
+	<Header />
 
-	<main>
+	<main class="grow">
 		<slot />
 	</main>
 </div>
