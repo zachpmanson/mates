@@ -66,6 +66,11 @@
 		}
 	} else {
 		map?.setView(userLocation ?? MELB, 13);
+		for (const marker of Object.values(markers)) {
+			marker.setStyle({
+				color: 'red'
+			});
+		}
 	}
 
 	onDestroy(async () => {
