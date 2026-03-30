@@ -1,0 +1,11 @@
+# Binaries
+mates-server
+
+# Vendor
+/vendor/
+
+# OS files
+.DS_Store
+
+# Editor
+.vscode/
