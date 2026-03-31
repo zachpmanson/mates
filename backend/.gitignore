@@ -9,3 +9,5 @@ mates-server
 
 # Editor
 .vscode/
+
+*.db
