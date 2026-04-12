@@ -4,7 +4,7 @@ export type MateReport = {
 	id: number;
 	title: string;
 	timestamp: string;
-	author: string;
+	author?: string;
 	coordinates: [number, number];
-	type: 'tram' | 'bus' | 'train';
+	type?: 'tram' | 'bus' | 'train';
 };

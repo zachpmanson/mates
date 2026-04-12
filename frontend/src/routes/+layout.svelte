@@ -1,12 +1,12 @@
 <script>
-	import Header from './Header.svelte';
 	import '../app.css';
+	import Header from './Header.svelte';
 </script>
 
-<div class="app h-screen flex flex-col">
+<div class="app h-screen flex flex-col overflow-hidden">
 	<Header />
 
-	<main class="grow">
+	<main class="grow overflow-hidden">
 		<slot />
 	</main>
 </div>

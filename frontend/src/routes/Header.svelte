@@ -1,40 +1,65 @@
 <script lang="ts">
 	import logo from '$lib/images/logo.svg';
 
-	import { formSchema, type FormSchema } from '$lib/components/report/schema';
+	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { formSchema } from '$lib/components/report/schema';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Drawer from '$lib/components/ui/drawer';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import * as Select from '$lib/components/ui/select';
 	import { Textarea } from '$lib/components/ui/textarea';
+	import { defaults, superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
-	import { superForm } from 'sveltekit-superforms/client';
 
-	const { form, errors, message, constraints, enhance } = superForm(
-		{
-			description: '',
-			name: '',
-			transport: 'tram'
-		},
+	let locationStatus: 'idle' | 'loading' | 'ok' | 'error' = 'idle';
+	let open = false;
+
+	const sf = superForm(
+		defaults({ title: '', summary: '', lat: 0, long: 0 }, zod(formSchema)),
 		{
 			SPA: true,
 			validators: zod(formSchema),
-			onUpdate({ form }) {
-				if (form.valid) {
-					// TODO: Call an external API with form.data, await the result and update form
-					console.log('Valid');
+			onUpdate: async ({ form }) => {
+				if (!form.valid) return;
+				const feedId = $page.url.searchParams.get('feed_id');
+				if (!feedId) return;
+				const res = await fetch('/api/sightings', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						title: form.data.title || undefined,
+						summary: form.data.summary,
+						lat: form.data.lat,
+						long: form.data.long,
+						feed_id: parseInt(feedId)
+					})
+				});
+				if (res.ok) {
+					open = false;
+					reset();
+					locationStatus = 'idle';
+					invalidateAll();
 				}
 			}
 		}
 	);
 
-	function handleSubmit() {
-		console.log('submit');
-		// open = false;
-	}
+	const { form, errors, enhance, submitting, reset } = sf;
 
-	let open = false;
+	function locateMe() {
+		locationStatus = 'loading';
+		navigator.geolocation.getCurrentPosition(
+			(pos) => {
+				$form.lat = pos.coords.latitude;
+				$form.long = pos.coords.longitude;
+				locationStatus = 'ok';
+			},
+			() => {
+				locationStatus = 'error';
+			}
+		);
+	}
 </script>
 
 <header class="flex justify-between items-center gap-1 p-3 bg-mate-grey">
@@ -44,7 +69,6 @@
 			class="flex gap-2 h-full items-center uppercase font-light text-white hover:text-mate-lime transition duration-75"
 		>
 			<img src={logo} alt="Where are our mates?" class="h-full" />
-
 			Where Are Our Mates?
 		</a>
 	</div>
@@ -56,55 +80,53 @@
 		<Drawer.Content class="max-w-lg m-auto">
 			<Drawer.Header>
 				<Drawer.Title>Mate Spotted!</Drawer.Title>
-				<Drawer.Description></Drawer.Description>
 			</Drawer.Header>
-			<div class="p-2">
-				<form method="POST" use:enhance>
-					<div class="flex gap-2 flex-col">
-						<Label for="message">Where did you see this mate?</Label>
+			<div class="p-4">
+				<form method="POST" use:enhance class="flex flex-col gap-3">
+					<div>
+						<Label for="summary">Where did you see this mate?</Label>
 						<Textarea
-							placeholder="Mate spotted at..."
-							id="message"
-							bind:value={$form.description}
+							placeholder="Mate spotted at…"
+							id="summary"
+							bind:value={$form.summary}
+							class="mt-1"
 						/>
-
-						<Select.Root
-							selected={{
-								value: $form.transport,
-								label: $form.transport.charAt(0).toUpperCase() + $form.transport.slice(1)
-							}}
-							onSelectedChange={(v) => {
-								v && ($form.transport = v.value);
-							}}
-						>
-							<Select.Trigger>
-								<Select.Value placeholder="" />
-							</Select.Trigger>
-							<Select.Content>
-								<Select.Item value="tram" label="Tram" />
-								<Select.Item value="train" label="Train" />
-								<Select.Item value="bus" label="Bus" />
-							</Select.Content>
-						</Select.Root>
-
-						<Label for="name">Name</Label>
-						<Input id="name" placeholder="Your name (optional)" bind:value={$form.name} />
+						{#if $errors.summary}
+							<p class="text-sm text-red-500 mt-1">{$errors.summary}</p>
+						{/if}
 					</div>
+
+					<div>
+						<Label for="title">Title <span class="text-gray-400 font-normal">(optional)</span></Label>
+						<Input id="title" placeholder="Short title" bind:value={$form.title} class="mt-1" />
+					</div>
+
+					<div>
+						<Label>Location</Label>
+						<div class="mt-1 flex gap-2 items-center">
+							<Input type="number" step="any" bind:value={$form.lat} placeholder="Lat" />
+							<Input type="number" step="any" bind:value={$form.long} placeholder="Long" />
+							<button
+								type="button"
+								on:click={locateMe}
+								class="shrink-0 border rounded px-3 py-1.5 text-sm hover:bg-gray-50"
+							>
+								{locationStatus === 'loading' ? 'Locating…' : 'Use my location'}
+							</button>
+						</div>
+						{#if locationStatus === 'error'}
+							<p class="text-sm text-red-500 mt-1">Could not get location.</p>
+						{/if}
+					</div>
+
+					<Drawer.Footer class="px-0">
+						<Button type="submit" class="w-full" variant={'action'} disabled={$submitting}>
+							{$submitting ? 'Submitting…' : 'Submit'}
+						</Button>
+						<Drawer.Close>Cancel</Drawer.Close>
+					</Drawer.Footer>
 				</form>
 			</div>
-
-			<Drawer.Footer>
-				<Drawer.Close class="w-full">
-					<Button
-						class="w-full"
-						variant={'action'}
-						disabled={!!$errors.description}
-						on:click={handleSubmit}>Submit</Button
-					>
-				</Drawer.Close>
-
-				<Drawer.Close>Cancel</Drawer.Close>
-			</Drawer.Footer>
 		</Drawer.Content>
 	</Drawer.Root>
 </header>

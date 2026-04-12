@@ -33,9 +33,11 @@
 				{timeAgo(new Date(report.timestamp))} ago
 			</span>
 
-			<span class="text-gray-400 text-xs">
-				Spotted by {report.author}
-			</span>
+			{#if report.author}
+				<span class="text-gray-400 text-xs">
+					Spotted by {report.author}
+				</span>
+			{/if}
 		</div>
 	</div>
 </Card>
