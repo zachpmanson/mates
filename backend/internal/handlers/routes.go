@@ -17,6 +17,7 @@ func AttachHandlers(db *sql.DB) *http.ServeMux {
 	mux.HandleFunc("/api/feeds", h.FeedsHandler)
 	mux.HandleFunc("/api/feeds/", h.FeedIdHandler)
 	mux.HandleFunc("/api/sightings", h.SightingsHanlder)
+	mux.HandleFunc("/api/sightings.rss", h.SightingsGeoRSSHandler)
 	mux.HandleFunc("/api/sightings/", h.SightingIdHandler)
 
 	return mux

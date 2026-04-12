@@ -12,6 +12,12 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+func maybeCrash(err error, msg string) {
+	if err != nil {
+		log.Fatalf("%s: %v", msg, err)
+	}
+}
+
 func main() {
 
 	// Open DB (sqlite3 used here). This will create a local file `mates.db` in the backend dir.
@@ -20,9 +26,8 @@ func main() {
 		dbPath = "mates.db"
 	}
 	db, err := sql.Open("sqlite3", dbPath)
-	if err != nil {
-		log.Fatalf("open db: %v", err)
-	}
+	maybeCrash(err, "open db")
+
 	// enable foreign keys for sqlite
 	_, _ = db.Exec("PRAGMA foreign_keys = ON;")
 

@@ -6,7 +6,6 @@ package sqlc
 
 import (
 	"database/sql"
-	"time"
 )
 
 type Feed struct {
@@ -18,7 +17,7 @@ type Feed struct {
 type Sighting struct {
 	ID        int64
 	FeedID    int64
-	CreatedAt time.Time
+	CreatedAt string
 	Title     sql.NullString
 	Summary   sql.NullString
 	Lat       float64

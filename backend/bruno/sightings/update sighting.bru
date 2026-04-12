@@ -1,0 +1,21 @@
+meta {
+  name: update sighting
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/sightings/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "created_at": "2026-04-12T00:00:00Z",
+    "title": "Updated title",
+    "summary": "Updated summary",
+    "lat": -33.8688,
+    "long": 151.2093
+  }
+}

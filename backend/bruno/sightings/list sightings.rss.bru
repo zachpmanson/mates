@@ -1,0 +1,22 @@
+meta {
+  name: list sightings.rss
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/api/sightings.rss?feed_id=1
+  body: none
+  auth: none
+}
+
+params:query {
+  feed_id: 1
+  ~latMin: -90
+  ~latMax: 90
+  ~longMin: -180
+  ~longMax: 180
+  ~start: 1970-01-01T00:00:00Z
+  ~end: 2099-01-01T00:00:00Z
+  ~limit: 100
+}

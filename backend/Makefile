@@ -6,3 +6,6 @@ build:
 
 test:
 	go test ./...
+
+queries:
+	sqlc generate

@@ -1,0 +1,22 @@
+meta {
+  name: create sighting
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/sightings
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "created_at": "2026-04-12T00:00:00Z",
+    "title": "Spotted something",
+    "summary": "A brief summary",
+    "lat": -33.8688,
+    "long": 151.2093,
+    "feed_id": 1
+  }
+}

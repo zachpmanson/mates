@@ -1,3 +1,7 @@
+-- name: CreateFeed :one
+INSERT INTO feeds (name, desc) VALUES (?, ?)
+RETURNING *;
+
 -- name: GetFeedByID :one
 SELECT id, name, desc FROM feeds
 WHERE id = ?
@@ -22,9 +26,9 @@ WHERE id = ?;
 
 -- name: CreateSighting :one
 INSERT INTO sightings (
-  created_at, title, summary, lat, long
+  created_at, title, summary, lat, long, feed_id
 ) VALUES (
-  ?, ?, ?, ?, ?
+  ?, ?, ?, ?, ?, ?
 )
 RETURNING *;
 

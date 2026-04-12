@@ -2,17 +2,17 @@ CREATE TABLE feeds (
   id   INTEGER PRIMARY KEY,
   name text    NOT NULL,
   desc  text
-);
+) STRICT;
 
 CREATE TABLE sightings (
   id INTEGER PRIMARY KEY,
   feed_id INTEGER NOT NULL REFERENCES feeds(id) ON DELETE CASCADE,
-  created_at DATETIME NOT NULL,
+  created_at TEXT NOT NULL, --ISO DATETIME
   title TEXT,
   summary TEXT,
   lat REAL NOT NULL,
   long REAL NOT NULL
-);
+) STRICT;
 
 
 

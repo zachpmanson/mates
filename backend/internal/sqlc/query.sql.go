@@ -8,25 +8,42 @@ package sqlc
 import (
 	"context"
 	"database/sql"
-	"time"
 )
+
+const createFeed = `-- name: CreateFeed :one
+INSERT INTO feeds (name, desc) VALUES (?, ?)
+RETURNING id, name, "desc"
+`
+
+type CreateFeedParams struct {
+	Name string
+	Desc sql.NullString
+}
+
+func (q *Queries) CreateFeed(ctx context.Context, arg CreateFeedParams) (Feed, error) {
+	row := q.db.QueryRowContext(ctx, createFeed, arg.Name, arg.Desc)
+	var i Feed
+	err := row.Scan(&i.ID, &i.Name, &i.Desc)
+	return i, err
+}
 
 const createSighting = `-- name: CreateSighting :one
 
 INSERT INTO sightings (
-  created_at, title, summary, lat, long
+  created_at, title, summary, lat, long, feed_id
 ) VALUES (
-  ?, ?, ?, ?, ?
+  ?, ?, ?, ?, ?, ?
 )
 RETURNING id, feed_id, created_at, title, summary, lat, long
 `
 
 type CreateSightingParams struct {
-	CreatedAt time.Time
+	CreatedAt string
 	Title     sql.NullString
 	Summary   sql.NullString
 	Lat       float64
 	Long      float64
+	FeedID    int64
 }
 
 // Sightings CRUD
@@ -37,6 +54,7 @@ func (q *Queries) CreateSighting(ctx context.Context, arg CreateSightingParams) 
 		arg.Summary,
 		arg.Lat,
 		arg.Long,
+		arg.FeedID,
 	)
 	var i Sighting
 	err := row.Scan(
@@ -152,8 +170,8 @@ type ListSightingsParams struct {
 	Lat_2       float64
 	Long        float64
 	Lat_3       float64
-	CreatedAt   time.Time
-	CreatedAt_2 time.Time
+	CreatedAt   string
+	CreatedAt_2 string
 	FeedID      int64
 	Limit       int64
 }
@@ -227,7 +245,7 @@ WHERE id = ?
 `
 
 type UpdateSightingParams struct {
-	CreatedAt time.Time
+	CreatedAt string
 	Title     sql.NullString
 	Summary   sql.NullString
 	Lat       float64

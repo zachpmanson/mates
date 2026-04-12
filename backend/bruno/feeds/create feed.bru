@@ -1,0 +1,18 @@
+meta {
+  name: create feed
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/feeds
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Myki Inspectors",
+    "desc": "A description"
+  }
+}
