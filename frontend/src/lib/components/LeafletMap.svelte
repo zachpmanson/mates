@@ -12,15 +12,8 @@
 	let markers: Record<string, L.CircleMarker> = {};
 	let userLocation: [number, number] | null = null;
 
-	onMount(async () => {
+	async function updateMap() {
 		const L = await import('leaflet');
-
-		map = L.map(mapElement).setView(MELB, 13);
-
-		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			attribution:
-				'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-		}).addTo(map);
 
 		for (const report of $reportStore.reports) {
 			let marker = L.circleMarker(report.coordinates, {
@@ -40,6 +33,19 @@
 				}
 			});
 		}
+	}
+
+	onMount(async () => {
+		const L = await import('leaflet');
+
+		map = L.map(mapElement).setView(MELB, 13);
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution:
+				'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
+
+		await updateMap();
 
 		navigator.geolocation.getCurrentPosition(
 			(pos) => {
@@ -50,6 +56,10 @@
 			{}
 		);
 	});
+
+	$: if ($reportStore.reports) {
+		updateMap().then();
+	}
 
 	$: if ($reportStore.highlightedReport) {
 		const report = $reportStore.reports.find((r) => r.id === $reportStore.highlightedReport);

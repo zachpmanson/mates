@@ -17,9 +17,9 @@
 		? data.feeds.filter((f) => f.Name.toLowerCase().includes(query.toLowerCase()))
 		: data.feeds;
 
-	function selectFeed(id: number) {
+	function selectFeed(id: number | undefined) {
 		query = '';
-		goto(`/?feed_id=${id}`);
+		goto(`/?feed_id=${id ?? ''}`);
 	}
 </script>
 
@@ -62,9 +62,12 @@
 		{#if currentFeedId}
 			{@const feed = data.feeds.find((f) => String(f.ID) === currentFeedId)}
 			{#if feed}
-				<p class="px-3 py-1 text-xs text-gray-500 border-b">
-					Showing: <strong>{feed.Name}</strong>
-				</p>
+				<div class="px-3 py-1 text-md text-gray-500 border-b flex justify-between">
+					<div>
+						Showing: <strong>{feed.Name}</strong>
+					</div>
+					<button on:click={() => selectFeed(undefined)}>Close</button>
+				</div>
 			{/if}
 		{/if}
 		<ReportList />
