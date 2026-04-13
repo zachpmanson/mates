@@ -1,0 +1,31 @@
+meta {
+  name: View departures for a specific route from a stop
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/v3/departures/route_type/:route_type/stop/:stop_id/route/:route_id
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~direction_id: 
+  ~gtfs: 
+  ~date_utc: 
+  ~max_results: 
+  ~include_cancelled: 
+  ~look_backwards: 
+  ~expand: 
+  ~include_geopath: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  route_type: 
+  stop_id: 
+  route_id: 
+}

@@ -1,0 +1,23 @@
+meta {
+  name: View all disruptions for a particular route and stop
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/v3/disruptions/route/:route_id/stop/:stop_id
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~disruption_status: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  route_id: 
+  stop_id: 
+}

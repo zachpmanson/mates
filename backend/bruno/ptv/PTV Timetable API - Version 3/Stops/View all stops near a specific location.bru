@@ -1,0 +1,26 @@
+meta {
+  name: View all stops near a specific location
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/v3/stops/location/:latitude,:longitude
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~route_types: 
+  ~max_results: 
+  ~max_distance: 
+  ~stop_disruptions: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  latitude: 
+  longitude: 
+}

@@ -1,0 +1,18 @@
+meta {
+  name: List all ticket outlets
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/v3/outlets
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~max_results: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}

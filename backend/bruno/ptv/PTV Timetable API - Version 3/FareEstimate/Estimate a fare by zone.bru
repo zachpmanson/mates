@@ -1,0 +1,27 @@
+meta {
+  name: Estimate a fare by zone
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/v3/fare_estimate/min_zone/:minZone/max_zone/:maxZone
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~journey_touch_on_utc: 
+  ~journey_touch_off_utc: 
+  ~is_journey_in_free_tram_zone: 
+  ~is_journey_in_overlap_zone: 
+  ~travelled_route_types: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  minZone: 
+  maxZone: 
+}

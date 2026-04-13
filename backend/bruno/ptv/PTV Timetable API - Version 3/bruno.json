@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "PTV Timetable API - Version 3",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

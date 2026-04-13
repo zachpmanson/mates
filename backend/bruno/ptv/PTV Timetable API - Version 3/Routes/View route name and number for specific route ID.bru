@@ -1,0 +1,23 @@
+meta {
+  name: View route name and number for specific route ID
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/v3/routes/:route_id
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~include_geopath: 
+  ~geopath_utc: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  route_id: 
+}

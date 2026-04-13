@@ -1,0 +1,22 @@
+meta {
+  name: View all routes of a particular type for a direction of travel
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/v3/directions/:direction_id/route_type/:route_type
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  direction_id: 
+  route_type: 
+}

@@ -1,0 +1,28 @@
+meta {
+  name: View the stopping pattern for a specific trip/service run
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/v3/pattern/run/:run_ref/route_type/:route_type
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~expand: 
+  ~stop_id: 
+  ~date_utc: 
+  ~include_skipped_stops: 
+  ~include_geopath: 
+  ~include_advertised_interchange: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  run_ref: 
+  route_type: 
+}

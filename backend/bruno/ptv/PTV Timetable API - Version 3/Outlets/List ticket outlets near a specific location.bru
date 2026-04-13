@@ -1,0 +1,24 @@
+meta {
+  name: List ticket outlets near a specific location
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/v3/outlets/location/:latitude,:longitude
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~max_distance: 
+  ~max_results: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  latitude: 
+  longitude: 
+}

@@ -11,3 +11,4 @@ mates-server
 .vscode/
 
 *.db
+.env

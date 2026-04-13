@@ -1,0 +1,21 @@
+meta {
+  name: View a specific disruption
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/v3/disruptions/:disruption_id
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  disruption_id: 
+}

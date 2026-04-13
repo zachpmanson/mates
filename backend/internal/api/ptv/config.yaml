@@ -1,0 +1,7 @@
+package: ptv
+
+output: ptv.gen.go
+generate:
+  models: true
+  # chi-server: true   # if you want server stubs
+  client: true       # if you want an HTTP client

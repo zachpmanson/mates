@@ -1,0 +1,30 @@
+meta {
+  name: View facilities at a specific stop (Metro and V/Line stations only)
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/v3/stops/:stop_id/route_type/:route_type
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~stop_location: 
+  ~stop_amenities: 
+  ~stop_accessibility: 
+  ~stop_contact: 
+  ~stop_ticket: 
+  ~gtfs: 
+  ~stop_staffing: 
+  ~stop_disruptions: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  stop_id: 
+  route_type: 
+}

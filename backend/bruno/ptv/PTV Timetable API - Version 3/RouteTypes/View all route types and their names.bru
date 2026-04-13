@@ -1,0 +1,17 @@
+meta {
+  name: View all route types and their names
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/v3/route_types
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~token: 
+  ~devid: 
+  ~signature: 
+}

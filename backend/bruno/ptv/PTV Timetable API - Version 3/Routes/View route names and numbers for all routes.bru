@@ -1,0 +1,19 @@
+meta {
+  name: View route names and numbers for all routes
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/v3/routes
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~route_types: 
+  ~route_name: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}

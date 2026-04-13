@@ -1,0 +1,25 @@
+meta {
+  name: View all trip/service runs for a specific run_ref
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/v3/runs/:run_ref
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~include_geopath: 
+  ~expand: 
+  ~date_utc: 
+  ~include_advertised_interchange: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  run_ref: 
+}

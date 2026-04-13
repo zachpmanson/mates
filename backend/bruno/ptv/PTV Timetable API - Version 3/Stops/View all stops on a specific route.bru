@@ -1,0 +1,27 @@
+meta {
+  name: View all stops on a specific route
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/v3/stops/route/:route_id/route_type/:route_type
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~direction_id: 
+  ~stop_disruptions: 
+  ~include_geopath: 
+  ~geopath_utc: 
+  ~include_advertised_interchange: 
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
+
+params:path {
+  route_id: 
+  route_type: 
+}

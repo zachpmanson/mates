@@ -1,0 +1,17 @@
+meta {
+  name: Get all disruption modes
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/v3/disruptions/modes
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~token: 
+  ~devid: 
+  ~signature: 
+}
